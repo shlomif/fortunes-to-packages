@@ -69,7 +69,10 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Sun Jul 21 2002 Shlomi Fish <shlomif@...> 0.2.4-7
+* Wed Oct 08 2008 Shlomi Fish <shlomif@iglu.org.il> 0.10.148-1
+- Updated slightly.
+
+* Sun Jul 21 2002 Shlomi Fish <shlomif@iglu.org.il> 0.2.4-7
 - Applied Tzafrir's Suggestions:
 - Created the macro %{fortunedatadir} to specify the locations of the files
 - Broke up long lines.
@@ -80,9 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 - Added a README file.
 
 
-* Fri May 31 2002 Shlomi Fish <shlomif@...> 0.2.2-2
+* Fri May 31 2002 Shlomi Fish <shlomif@iglu.org.il> 0.2.2-2
 - Added macros all over the place
 
-* Thu May 30 2002 Shlomi Fish <shlomif@...> 0.2.2-1
+* Thu May 30 2002 Shlomi Fish <shlomif@iglu.org.il> 0.2.2-1
 - first release - testing.
 
