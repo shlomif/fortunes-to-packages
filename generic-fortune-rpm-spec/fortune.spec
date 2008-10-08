@@ -44,20 +44,20 @@ EOF
 
 myprefix="%{fortunefilesprefix}"
 rm -f *.dat
-ls | grep -v "\\." | grep -v "[A-Z]" | \
+ls | grep -v "\\." | grep -v "[[:upper:]]" | \
     ( while read T ; do \
         mv "$T" "${myprefix}$T" ; \
         /usr/sbin/strfile "${myprefix}$T" "${myprefix}$T.dat" ; \
-        done 
+        done \
     )
 
 %install
 
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{fortunedatadir}
-for I in *.dat ; do
+for I in *.dat ; do \
     cp $I "`echo "$I" | sed 's/\.dat$//'`" \
-        $RPM_BUILD_ROOT/%{fortunedatadir}
+        $RPM_BUILD_ROOT/%{fortunedatadir} ; \
 done
 
 %files
