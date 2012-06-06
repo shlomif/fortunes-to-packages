@@ -45,19 +45,19 @@ EOF
 myprefix="%{fortunefilesprefix}"
 rm -f *.dat
 ls | grep -v "\\." | grep -v "[[:upper:]]" | \
-    ( while read T ; do \
-        mv "$T" "${myprefix}$T" ; \
-        /usr/sbin/strfile "${myprefix}$T" "${myprefix}$T.dat" ; \
+    ( while read t ; do \
+        mv "$t" "${myprefix}$T" ; \
+        /usr/sbin/strfile "${myprefix}$t" "${myprefix}$t.dat" ; \
         done \
     )
 
 %install
 
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{fortunedatadir}
-for I in *.dat ; do \
-    cp $I "`echo "$I" | sed 's/\.dat$//'`" \
-        $RPM_BUILD_ROOT/%{fortunedatadir} ; \
+rm -rf "$RPM_BUILD_ROOT"
+mkdir -p "$RPM_BUILD_ROOT"/%{fortunedatadir}
+for dat in *.dat ; do \
+    cp "${dat}" "`echo "$dat" | sed 's/\.dat$//'`" \
+        "$RPM_BUILD_ROOT"/%{fortunedatadir} ; \
 done
 
 %files
@@ -66,7 +66,7 @@ done
 %doc README
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf "$RPM_BUILD_ROOT"
 
 %changelog
 * Wed Oct 08 2008 Shlomi Fish <shlomif@iglu.org.il> 0.10.148-1
