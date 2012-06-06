@@ -44,12 +44,10 @@ EOF
 
 myprefix="%{fortunefilesprefix}"
 rm -f *.dat
-ls | grep -v "\\." | grep -v "[[:upper:]]" | \
-    ( while read t ; do \
-        mv "$t" "${myprefix}$T" ; \
-        /usr/sbin/strfile "${myprefix}$t" "${myprefix}$t.dat" ; \
-        done \
-    )
+for fn in `ls | grep -v "\\." | grep -v "[[:upper:]]"` ; do \
+    mv "$fn" "$myprefix$fn" ; \
+    /usr/sbin/strfile "${myprefix}$fn" "${myprefix}$fn.dat" ; \
+done
 
 %install
 
