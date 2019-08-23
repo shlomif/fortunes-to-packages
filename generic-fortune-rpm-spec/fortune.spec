@@ -18,10 +18,10 @@ Release: %{rel}
 License: Free to use but restricted
 Group: Toys
 
-Source: http://www.shlomifish.org/humour/fortunes/%{archivefull}
+Source: https://www.shlomifish.org/humour/fortunes/%{archivefull}
 BuildArch: noarch
 Buildroot: %{_tmppath}/%{name}-root
-URL: http://www.shlomifish.org/humour/fortunes/
+URL: https://www.shlomifish.org/humour/fortunes/
 BuildRequires: fortune-mod
 Requires: fortune-mod
 Summary: Fortune Cookies Collection by Shlomi Fish
@@ -44,9 +44,11 @@ EOF
 
 myprefix="%{fortunefilesprefix}"
 rm -f *.dat
+# For strfile
+PATH="$PATH:/usr/sbin:/sbin"
 for fn in `ls | grep -v "\\." | grep -v "[[:upper:]]"` ; do \
     mv "$fn" "$myprefix$fn" ; \
-    /usr/sbin/strfile "${myprefix}$fn" "${myprefix}$fn.dat" ; \
+    strfile "${myprefix}$fn" "${myprefix}$fn.dat" ; \
 done
 
 %install
@@ -55,7 +57,7 @@ rm -rf "$RPM_BUILD_ROOT"
 mkdir -p "$RPM_BUILD_ROOT"/%{fortunedatadir}
 for dat in *.dat ; do \
     cp "${dat}" "`echo "$dat" | sed 's/\.dat$//'`" \
-        "$RPM_BUILD_ROOT"/%{fortunedatadir} ; \
+        "$RPM_BUILD_ROOT"/%{fortunedatadir}/ ; \
 done
 
 %files
