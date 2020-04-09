@@ -1,9 +1,9 @@
 # Base Macros which need to be set
-%define packageprefix fortune-mod-fortunes
-%define packagebase shlomif
-%define archivebase fortunes-shlomif
-%define version 0.10.148
-%define fortunefilesprefix shlomif-
+%define packageprefix fortune-
+%define packagebase joelkirchartz
+%define archivebase fortune-joelkirchartz
+%define version 0.0.1.20200409
+%define fortunefilesprefix %{packagebase}
 %define rel 1
 
 # Derived Macros
@@ -15,30 +15,25 @@
 Name: %{packageprefix}-%{packagebase}
 Version: %{version}
 Release: %{rel}
-License: Free to use but restricted
+License: Unlicense
 Group: Toys
 
-Source: https://www.shlomifish.org/humour/fortunes/%{archivefull}
+Source: %{archivefull}
 BuildArch: noarch
 Buildroot: %{_tmppath}/%{name}-root
-URL: https://www.shlomifish.org/humour/fortunes/
+URL: https://github.com/JKirchartz/fortunes
 BuildRequires: fortune-mod
+BuildRequires: perl
 Requires: fortune-mod
-Summary: Fortune Cookies Collection by Shlomi Fish
+Summary: Fortune Cookies Collection by Joel Kirchartz
 
 %description
-This package contains several collections of fortune cookies by Shlomi Fish.
-Namely, a collection of his own quotes, some of his favourites from various
-sources; a collection of excerpts from the T.V. Show Friends; the Rules of
-Open Source Programming, and a collection of reasons why there is no IGLU
-cabal.
+This package contains several collections of fortune cookies by Joel
+Kirchartz.
 
 
 %prep
 %setup -n %{archivewithver}
-cat <<EOF > README
-This is a group of fortune files collected by Shlomi Fish.
-EOF
 
 %build
 
@@ -46,27 +41,24 @@ myprefix="%{fortunefilesprefix}"
 rm -f *.dat
 # For strfile
 PATH="$PATH:/usr/sbin:/sbin"
-for fn in `ls | grep -v "\\." | grep -v "[[:upper:]]"` ; do \
+for fn in $(perl -E 'print join" ",grep {(not /\A(?:Makefile|LICENSE|(?:README.*)|(?:.*\.dat))\z/)}glob("*")') ; do \
     mv "$fn" "$myprefix$fn" ; \
     strfile "${myprefix}$fn" "${myprefix}$fn.dat" ; \
 done
 
 %install
 
-rm -rf "$RPM_BUILD_ROOT"
-mkdir -p "$RPM_BUILD_ROOT"/%{fortunedatadir}
+mkdir -p "%{buildroot}"/%{fortunedatadir}
 for dat in *.dat ; do \
     cp "${dat}" "`echo "$dat" | sed 's/\.dat$//'`" \
-        "$RPM_BUILD_ROOT"/%{fortunedatadir}/ ; \
+        "%{buildroot}"/%{fortunedatadir}/ ; \
 done
 
 %files
 %defattr(-,root,root)
 %{fortunedatadir}/*
-%doc README
-
-%clean
-rm -rf "$RPM_BUILD_ROOT"
+%doc README.md
+%license LICENSE
 
 %changelog
 * Wed Oct 08 2008 Shlomi Fish <shlomif@iglu.org.il> 0.10.148-1
