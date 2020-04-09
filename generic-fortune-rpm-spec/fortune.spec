@@ -1,7 +1,7 @@
 # Base Macros which need to be set
 %define packageprefix fortune-
 %define packagebase joelkirchartz
-%define archivebase fortune-joelkirchartz
+%define archivebase fortune-jkirchartz
 %define version 0.0.1.20200409
 %define fortunefilesprefix %{packagebase}
 %define rel 1
