@@ -5,10 +5,11 @@
 %define version 0.0.1.20200409
 %define fortunefilesprefix %{packagebase}
 %define rel 1
+%global tarball_ext gz
 
 # Derived Macros
 %define archivewithver %{archivebase}-%{version}
-%define archivefull %{archivewithver}.tar.gz
+%define archivefull %{archivewithver}.tar.%{tarball_ext}
 
 %define fortunedatadir %{_datadir}/games/fortunes
 
